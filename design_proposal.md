@@ -67,22 +67,47 @@ CLEAR
 EXIT
 ```
 
-### Architecture
+### System Architecture
 
 ```text
-User
-  |
-  v
-Redis Lite CLI
-  |
-  v
+                                    +------------------+
+                                    |    RedisLite     |
+                                    +------------------+
+                                              |
+                                              v
+                                  +------------------------+
+                                  | SuperCollectionLibrary |
+                                  +------------------------+
+                                     /          |         \ 
+                                    /           |          \
+                                  v             v            v
+
+                        +--------------+ +--------------+ +--------------+
+                          | DynamicArray | | LinkedList   | |  HashMap  |
+                        +--------------+ +--------------+ +--------------+
+                                                                   |
+                                                                   v
+                                                              +------------+
+                                                              |  HashNode  |
+                                                              +------------+
+Components
+RedisLite
+•	Main application that processes commands like SET, GET, and DELETE. 
+SuperCollectionLibrary
+•	A collection of reusable data structures used by RedisLite. 
+DynamicArray
+•	Stores the HashMap buckets. 
+•	Provides fast access using indexes. 
+LinkedList
+•	Handles collisions when multiple keys map to the same bucket. 
+•	Connects nodes together. 
 HashMap
-  |
-  v
-DynamicArray (Buckets)
-  |
-  v
-LinkedList (Collision Chains)
+•	Main data structure for storing key-value pairs. 
+•	Uses hashing for fast insertion, search, and deletion. 
+HashNode
+•	Stores a single key-value pair. 
+•	Contains a key, value, and pointer to the next node.
+
 ```
 
 The HashMap stores buckets in a DynamicArray and resolves collisions using LinkedLists.
@@ -132,6 +157,8 @@ Deep copying prevents shared ownership, dangling pointers, and double-free error
 | HashMap      | get()     | O(1)           | O(n)  |
 | HashMap      | remove()  | O(1)           | O(n)  |
 
+
+Amortized O(1) insertion means that although some insertions take O(n) time when the array needs to resize, most insertions take O(1), so the average cost per insertion over many insertions is O(1).
 ---
 
 ## Design Decisions
