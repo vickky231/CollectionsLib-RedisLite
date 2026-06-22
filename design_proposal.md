@@ -307,15 +307,61 @@ HashMap
 •	Deletes bucket array. 
 •	Frees old buckets during rehashing.
  
-Rule of Three
-•	Destructor 
-•	Copy Constructor 
-•	Assignment Operator 
-Prevents:
-•	Memory leaks 
-•	Dangling pointers 
-•	Double deletion 
+### Rule of Three 
+
+The Rule of Three is a principle in C++ that applies to classes that manage resources such as dynamic memory.
+
+It states:
+If a class needs a Destructor, it will usually also need a Copy Constructor and a Copy Assignment Operator.
+
+These three functions work together to ensure that objects manage memory safely.
+
+Why is the Rule of Three Needed?
+When an object contains dynamically allocated memory, copying the object incorrectly can cause multiple objects to point to the same memory location.
+
+This can lead to problems such as:
+•	Double deletion of memory 
+•	Memory corruption 
+•	Program crashes 
+•	Unexpected behavior 
+
+The Rule of Three prevents these issues by ensuring that every object properly manages its own copy of the data.
 ________________________________________
+The Three Components
+1. Destructor
+The destructor is responsible for cleaning up resources when an object is destroyed.
+Its purpose is to:
+•	Free allocated memory 
+•	Prevent memory leaks 
+•	Release resources owned by the object 
+Think of it as a cleanup worker that removes everything an object was using before the object disappears.
+________________________________________
+2. Copy Constructor
+The copy constructor is used when a new object is created from an existing object.
+Its purpose is to:
+•	Create a separate copy of the original object's data 
+•	Ensure the new object has its own resources 
+•	Prevent two objects from sharing the same memory unintentionally 
+Think of it as making a complete photocopy instead of giving two people the same original document.
+________________________________________
+3. Copy Assignment Operator
+The copy assignment operator is used when one existing object is assigned to another existing object.
+Its purpose is to:
+•	Safely replace the current data of an object 
+•	Avoid memory leaks 
+•	Ensure proper copying of resources 
+Think of it as replacing the contents of one notebook with a copy of another notebook while first removing the old contents.
+________________________________________
+How the Rule of Three is Used in Redis-Lite
+In a Redis-Lite project, data structures such as:
+•	Dynamic Arrays 
+•	Linked Lists 
+•	Hash Tables 
+•	Hash Nodes 
+often use dynamic memory to store data.
+
+For example, a hash table stores buckets, and each bucket may contain linked nodes holding key-value pairs. Since memory is allocated dynamically, simply copying the object can cause multiple objects to share the same memory.
+_____________________
 
 ### System Architecture
 
