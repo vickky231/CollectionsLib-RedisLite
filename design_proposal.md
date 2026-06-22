@@ -1,5 +1,15 @@
 # DataForge & Redis Lite – Design Proposal
 
+## Introduction
+
+The objective of this project is to implement a reusable Collections Library consisting of:
+•	Dynamic Array 
+•	Linked List 
+•	HashMap 
+These data structures are integrated to build Redis Lite, an in-memory key-value storage system. The project focuses on data structure implementation, manual memory management, collision handling, rehashing, and performance analysis without using STL containers.
+
+---
+
 ## Project Overview
 
 DataForge is a custom C++ collections library consisting of three core data structures: **DynamicArray**, **LinkedList**, and **HashMap**.
@@ -114,7 +124,7 @@ Provides fast key-based access and serves as the primary storage structure for R
 
 ---
 
-### Generic Programming Using Templates
+## Generic Programming Using Templates
 
 Templates allow the same implementation to work with different data types.
 Generic Dynamic Array
@@ -235,7 +245,7 @@ buckets
 Redis Lite Instance
 HashMap<string,string> store;
 
-### Collision Handling and Rehashing
+## Collision Handling and Rehashing
 
 Separate Chaining
 hash("name") % 8 = 1
@@ -271,7 +281,7 @@ Purpose:
 •	Maintain O(1) average performance 
 
 
-### Redis Lite Design and Memory Management
+## Redis Lite Design and Memory Management
 Supported Commands
 SET key value
 GET key
@@ -307,7 +317,7 @@ HashMap
 •	Deletes bucket array. 
 •	Frees old buckets during rehashing.
  
-### Rule of Three 
+## Rule of Three 
 
 The Rule of Three is a principle in C++ that applies to classes that manage resources such as dynamic memory.
 
@@ -363,7 +373,7 @@ often use dynamic memory to store data.
 For example, a hash table stores buckets, and each bucket may contain linked nodes holding key-value pairs. Since memory is allocated dynamically, simply copying the object can cause multiple objects to share the same memory.
 _____________________
 
-### System Architecture
+## System Architecture
 
 ```text
                                     +------------------+
@@ -485,7 +495,7 @@ OK
 > SIZE
 0
 ```
-### Conclusion
+## Conclusion
 
 Redis Lite combines Dynamic Array, Linked List, and HashMap to build a scalable in-memory key-value database. Dynamic Array provides bucket storage, Linked List handles collisions, and HashMap enables fast key-based access. The project demonstrates generic programming, manual memory management, hashing, collision resolution, and system design principles.
 
