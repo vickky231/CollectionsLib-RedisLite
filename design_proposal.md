@@ -114,6 +114,163 @@ Provides fast key-based access and serves as the primary storage structure for R
 
 ---
 
+### Generic Programming Using Templates
+
+Templates allow the same implementation to work with different data types.
+Generic Dynamic Array
+template<typename T>
+class DynamicArray
+{
+    T* data;
+};
+
+Examples:
+DynamicArray<int> numbers;
+DynamicArray<string> names;
+ template<typename T>
+•	T is a placeholder type. 
+•	It can represent any data type such as int, float, string, etc. 
+•	The compiler replaces T with the actual type when an object is created. 
+ class DynamicArray
+•	Defines a generic class named DynamicArray. 
+ T* data;
+•	data is a pointer to type T. 
+•	It can point to an array of any data type specified when creating the object.
+
+________________________________________
+Generic Linked List
+template<typename T>
+struct Node
+{
+    T data;
+    Node<T>* next;
+};
+Examples:
+LinkedList<int> marks;
+LinkedList<string> cities;
+template<typename T>
+•	T is a placeholder for any data type. 
+•	It allows the node to store different types of data. 
+ T data;
+•	Stores the actual value in the node. 
+•	The type depends on what T is replaced with. 
+Node<T>* next;
+•	A pointer that stores the address of the next node. 
+•	This creates the link between nodes in the linked list. 
+________________________________________
+Generic HashNode
+template<typename K, typename V>
+struct HashNode
+{
+    K key;
+    V value;
+    HashNode<K,V>* next;
+};
+ template<typename K, typename V>
+•	K represents the Key type. 
+•	V represents the Value type. 
+•	These are placeholders that will be replaced with actual data types when the node is created. 
+Example:
+HashNode<int, string>
+Here:
+•	K = int 
+•	V = string 
+________________________________________
+2. K key;
+Stores the key of the key-value pair.
+Example:
+key = 101;
+or
+key = "Name";
+________________________________________
+3. V value;
+Stores the value associated with the key.
+Example:
+value = "Vivek";
+or
+value = 95.5;
+________________________________________
+4. HashNode<K,V>* next;
+A pointer to the next node.
+It is used when two different keys get mapped to the same hash table index (collision). The nodes are connected like a linked list.
+________________________________________
+Example 
+HashNode<int, string> student;
+The compiler treats it as:
+struct HashNode
+{
+    int key;
+    string value;
+    HashNode* next;
+};
+Data stored:
+Key   = 101
+Value = "Vivek"
+
+________________________________________
+Generic HashMap
+template<typename K, typename V>
+class HashMap
+{
+    HashNode<K,V>** buckets;
+};
+Examples:
+HashMap<string,string> store;
+HashMap<int,string> students;
+
+HashNode<K,V>** bucket => This is a pointer to an array of pointers to HashNode objects.
+buckets
+   |
+   v
++------+------+------+------+
+|  *   |  *   | NULL |  *   |
++------+------+------+------+
+   |          |             |
+   v           v             v
+ Node   Node      Node
+•	Each position in the array is called a bucket. 
+•	Each bucket stores the address of the first HashNode. 
+•	If multiple items hash to the same bucket, they are linked together using the next pointer.
+
+Redis Lite Instance
+HashMap<string,string> store;
+
+### Collision Handling and Rehashing
+
+Separate Chaining
+hash("name") % 8 = 1
+hash("city") % 8 = 1
+Bucket[1]
+
+[name]
+   |
+   v
+[city]
+
+Advantages
+•	Prevents overwriting 
+•	Simple implementation 
+•	Easy insertion and deletion 
+________________________________________
+Rehashing
+Load Factor:
+Load Factor = Elements / Buckets
+Threshold:
+0.75
+
+The 0.75 load factor means the HashMap is allowed to fill up to 75% before it increases its size. This helps keep operations fast and avoids too many collisions.
+
+When exceeded:
+1.	Double bucket count. 
+2.	Create new bucket table. 
+3.	Recompute hash values. 
+4.	Reinsert all elements. 
+5.	Delete old buckets. 
+Purpose:
+•	Reduce collisions 
+•	Maintain O(1) average performance 
+
+
 ## Redis Lite
 
 Redis Lite is a command-line key-value store built using the DataForge library.
