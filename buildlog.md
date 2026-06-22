@@ -14,7 +14,10 @@ Problem Encountered:
      arr.pushback(50);
          ^~~~~~~~
 
-3. Managing dynamic memory safely while resizing the array. Initial issues included    incorrect   size updates after push_back and confusion between capacity and size during element insertion and deletion.
+3. Elements: 10 
+   terminate called after throwing an instance of 'std::out_of_range'
+   what():  Index out of range
+
 
 What I Tried:
 
