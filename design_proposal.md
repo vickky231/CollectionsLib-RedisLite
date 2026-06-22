@@ -12,40 +12,103 @@ These structures are used to build **Redis Lite**, a simplified in-memory key-va
 ### DynamicArray
 
 ```cpp
-void append(int value);
-void insert(int index, int value);
-void remove(int index);
-int get(int index) const;
-void set(int index, int value);
-int size() const;
-bool isEmpty() const;
-```
 
-Provides dynamically resizable contiguous storage with efficient random access.
+Function	Complexity
+pushBack	O(1) amortized
+popBack	  O(1)
+get	      O(1)
+set	      O(1)
+resize	  O(n)                    
+
+```
+purpose
+
+HashMap requires a bucket table whose size can grow dynamically during execution.
+Data Members
+T* data;
+int size;
+int capacity;
+•	data stores the address of heap memory. 
+•	size stores the number of elements. 
+•	capacity stores allocated memory slots. 
+Resizing Strategy
+When:
+size == capacity
+capacity is doubled:
+4 → 8 → 16 → 32
 
 ### LinkedList
 
 ```cpp
-void insertFront(string key, string value);
-void insert(string key, string value);
-bool remove(string key);
-string search(string key) const;
-bool contains(string key) const;
-int size() const;
-```
 
-Stores key-value pairs and is used for collision handling within HashMap buckets.
+Function	Complexity
+insert	    O(1)
+search	    O(n)
+remove	    O(n)
+update	    O(n)
+
+```
+Purpose
+
+Stores key-value pairs and is used for collision handling within HashMap buckets..
+
+Node Structure
+
+struct Node
+{
+    string key;
+    string value;
+    Node* next;
+};
+Memory Layout
+     head
+      |
+      v
+[key1:value1]
+      |
+      v
+[key2:value2]
+      |
+      v
+     NULL
+
 
 ### HashMap
 
 ```cpp
-void put(string key, string value);
-string get(string key) const;
-bool remove(string key);
-bool containsKey(string key) const;
-int size() const;
-void clear();
+
+                                                                                              functions         	Complexity
+put	                O(1) average	
+get	                O(1) average
+remove	            O(1) average
+clear	              O(n)
+rehash	            O(n)
+
+"O(1) average" means that on average (most of the time) the operation takes a constant amount of time, regardless of how many elements are stored.
+
+
 ```
+
+Purpose
+
+Provides efficient implementation of:
+SET
+GET
+DEL
+EXISTS
+Components
+•	Dynamic Array 
+•	Linked List 
+•	Hash Function 
+•	Rehashing 
+
+Memory Layout
+Bucket[1]
+
+[name:Vivek]
+      |
+      v
+[city:Karnal]
 
 Provides fast key-based access and serves as the primary storage structure for Redis Lite.
 
