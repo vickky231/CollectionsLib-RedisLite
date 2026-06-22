@@ -485,3 +485,8 @@ OK
 > SIZE
 0
 ```
+### Conclusion
+
+Redis Lite combines Dynamic Array, Linked List, and HashMap to build a scalable in-memory key-value database. Dynamic Array provides bucket storage, Linked List handles collisions, and HashMap enables fast key-based access. The project demonstrates generic programming, manual memory management, hashing, collision resolution, and system design principles.
+
+
