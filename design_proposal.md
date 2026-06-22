@@ -271,21 +271,51 @@ Purpose:
 •	Maintain O(1) average performance 
 
 
-## Redis Lite
-
-Redis Lite is a command-line key-value store built using the DataForge library.
-
-### Supported Commands
-
-```text
+### Redis Lite Design and Memory Management
+Supported Commands
 SET key value
 GET key
 DEL key
 EXISTS key
-SIZE
+COUNT
 CLEAR
 EXIT
-```
+
+Command Flow
+SET key value
+      |
+      v
+Hash Function
+      |
+      v
+Bucket Selection
+      |
+      v
+  Insertion
+
+Memory Management
+
+Dynamic Array
+new[]
+delete[]
+Linked List
+new Node
+delete Node
+
+HashMap
+•	Deletes collision chains. 
+•	Deletes bucket array. 
+•	Frees old buckets during rehashing.
+ 
+Rule of Three
+•	Destructor 
+•	Copy Constructor 
+•	Assignment Operator 
+Prevents:
+•	Memory leaks 
+•	Dangling pointers 
+•	Double deletion 
+________________________________________
 
 ### System Architecture
 
