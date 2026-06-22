@@ -9,7 +9,12 @@ Problem Encountered:
    g++.exe: fatal error: no input files
    compilation terminated.
 
-2. Managing dynamic memory safely while resizing the array. Initial issues included    incorrect   size updates after push_back and confusion between capacity and size during element insertion and deletion.
+2. dynamicArray.cpp: In function 'int main()':
+   dynamicArray.cpp:153:9: error: 'class DynamicArray<int>' has no member named 'pushback'; did you mean 'pushBack'?
+     arr.pushback(50);
+         ^~~~~~~~
+
+3. Managing dynamic memory safely while resizing the array. Initial issues included    incorrect   size updates after push_back and confusion between capacity and size during element insertion and deletion.
 
 What I Tried:
 
